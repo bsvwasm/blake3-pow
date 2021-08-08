@@ -1,0 +1,36 @@
+[package]
+name = "blake3_pow"
+version = "0.1.0"
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = { version = "^0.2", features = ["serde-serialize"] }
+wee_alloc = "^0.4.5"
+serde = { version = "^1.0", default-features = false, features = ["alloc", "derive"] }
+serde_json = "^1.0"
+blake3 = "^1.0.0"
+sha2 = "0.9.5"
+primitive-types = "0.10.1"
+unroll = "0.1.5"
+
+[dependencies.getrandom]
+version = "^0.2"
+features = ["js"]
+
+[dev-dependencies]
+wasm-bindgen-test = "^0.3"
+console_error_panic_hook = { version = "^0.1" }
+
+[build]
+rustflags = ["-C", "target-feature=+simd128"]
+
+[profile.release]
+opt-level = 3
+lto = true
+
+[profile.test]
+opt-level = 3
+debug = false
